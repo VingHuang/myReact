@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+    class King extends React.Component{
+        constructor(props){
+            super(props);
+            this.state = {
+                soldier:100
+            }
+            this.give = this.give.bind(this)
+        }
+        give(){
+            this.setState({
+                soldier:this.state.soldier - 10
+            })
+        }
+        render(){
+            return(
+                <div>
+                    <h1>国王士兵总数：{this.state.soldier}</h1>
+                    <Lower soldier={100} callParent={this.give}/>
+                    <Lower soldier={100} callParent={this.give}/>
+
+                </div>
+            )
+        }
+    }
+    class Lower extends React.Component{
+        constructor(props){
+            super(props);
+            this.state = {
+                soldier:this.props.soldier
+            }
+            this.ask = this.ask.bind(this)
+        }
+        ask(){
+            this.setState({
+                soldier:this.state.soldier+10
+            })
+            this.props.callParent();
+                
+            
+        }
+        render(){
+            return(
+                <div>
+                    <h3>将军士兵总数:{this.state.soldier}</h3>
+                    <button onClick={this.ask}>调兵</button>
+                </div>
+                
+            )
+        }
+    }
+            ReactDOM.render(
+                <King/>,
+                document.getElementById('root')
+            );
+    </script>
+   
+  </body>
+</html>
